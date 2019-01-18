@@ -221,6 +221,7 @@ export var Draggable = Evented.extend({
 		}
 
 		this._moving = false;
+		this._moved = false;
 		Draggable._dragging = false;
 	}
 

@@ -20,9 +20,9 @@ import * as DomUtil from '../../dom/DomUtil';
 export var IconDefault = Icon.extend({
 
 	options: {
-		iconUrl:       'marker-icon.png',
+		iconUrl:       'Leaflet/marker-icon.svg',
 		iconRetinaUrl: 'marker-icon-2x.png',
-		shadowUrl:     'marker-shadow.png',
+		shadowUrl:     'Leaflet/marker-shadow.png',
 		iconSize:    [25, 41],
 		iconAnchor:  [12, 41],
 		popupAnchor: [1, -34],

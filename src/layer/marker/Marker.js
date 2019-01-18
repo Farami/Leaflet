@@ -1,9 +1,9 @@
-import {Layer} from '../Layer';
-import {IconDefault} from './Icon.Default';
+import { Layer } from '../Layer';
+import { IconDefault } from './Icon.Default';
 import * as Util from '../../core/Util';
-import {toLatLng as latLng} from '../../geo/LatLng';
+import { toLatLng as latLng } from '../../geo/LatLng';
 import * as DomUtil from '../../dom/DomUtil';
-import {MarkerDrag} from './Marker.Drag';
+import { MarkerDrag } from './Marker.Drag';
 
 /*
  * @class Marker
@@ -106,7 +106,10 @@ export var Marker = Layer.extend({
 			map.off('zoomanim', this._animateZoom, this);
 		}
 
-		this._removeIcon();
+		if (this._icon) {
+			this._removeIcon();
+		}
+		
 		this._removeShadow();
 	},
 
@@ -132,7 +135,7 @@ export var Marker = Layer.extend({
 
 		// @event move: Event
 		// Fired when the marker is moved via [`setLatLng`](#marker-setlatlng) or by [dragging](#marker-dragging). Old and new coordinates are included in event arguments as `oldLatLng`, `latlng`.
-		return this.fire('move', {oldLatLng: oldLatLng, latlng: this._latlng});
+		return this.fire('move', { oldLatLng: oldLatLng, latlng: this._latlng });
 	},
 
 	// @method setZIndexOffset(offset: Number): this
@@ -176,10 +179,10 @@ export var Marker = Layer.extend({
 
 	_initIcon: function () {
 		var options = this.options,
-		    classToAdd = 'leaflet-zoom-' + (this._zoomAnimated ? 'animated' : 'hide');
+			classToAdd = 'leaflet-zoom-' + (this._zoomAnimated ? 'animated' : 'hide');
 
 		var icon = options.icon.createIcon(this._icon),
-		    addIcon = false;
+			addIcon = false;
 
 		// if we're not reusing the icon, remove the old one and init new one
 		if (icon !== this._icon) {
@@ -212,7 +215,7 @@ export var Marker = Layer.extend({
 		}
 
 		var newShadow = options.icon.createShadow(this._shadow),
-		    addShadow = false;
+			addShadow = false;
 
 		if (newShadow !== this._shadow) {
 			this._removeShadow();

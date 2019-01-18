@@ -1,5 +1,5 @@
 /* @preserve
- * Leaflet 1.2.0, a JS library for interactive maps. http://leafletjs.com
+ * Leaflet 1.2.0+1.2.0-modified.1ac320b, a JS library for interactive maps. http://leafletjs.com
  * (c) 2010-2017 Vladimir Agafonkin, (c) 2010-2011 CloudMade
  */
 (function (global, factory) {
@@ -8,7 +8,7 @@
 	(factory((global.L = {})));
 }(this, (function (exports) { 'use strict';
 
-var version = "1.2.0";
+var version = "1.2.0+1.2.0-modified.1ac320ba";
 
 /*
  * @namespace Util
@@ -5804,6 +5804,7 @@ var Draggable = Evented.extend({
 		}
 
 		this._moving = false;
+		this._moved = false;
 		Draggable._dragging = false;
 	}
 
@@ -6986,9 +6987,9 @@ function icon(options) {
 var IconDefault = Icon.extend({
 
 	options: {
-		iconUrl:       'marker-icon.png',
+		iconUrl:       'Leaflet/marker-icon.svg',
 		iconRetinaUrl: 'marker-icon-2x.png',
-		shadowUrl:     'marker-shadow.png',
+		shadowUrl:     'Leaflet/marker-shadow.png',
 		iconSize:    [25, 41],
 		iconAnchor:  [12, 41],
 		popupAnchor: [1, -34],
@@ -7231,7 +7232,10 @@ var Marker = Layer.extend({
 			map.off('zoomanim', this._animateZoom, this);
 		}
 
-		this._removeIcon();
+		if (this._icon) {
+			this._removeIcon();
+		}
+		
 		this._removeShadow();
 	},
 
@@ -7257,7 +7261,7 @@ var Marker = Layer.extend({
 
 		// @event move: Event
 		// Fired when the marker is moved via [`setLatLng`](#marker-setlatlng) or by [dragging](#marker-dragging). Old and new coordinates are included in event arguments as `oldLatLng`, `latlng`.
-		return this.fire('move', {oldLatLng: oldLatLng, latlng: this._latlng});
+		return this.fire('move', { oldLatLng: oldLatLng, latlng: this._latlng });
 	},
 
 	// @method setZIndexOffset(offset: Number): this
@@ -7301,10 +7305,10 @@ var Marker = Layer.extend({
 
 	_initIcon: function () {
 		var options = this.options,
-		    classToAdd = 'leaflet-zoom-' + (this._zoomAnimated ? 'animated' : 'hide');
+			classToAdd = 'leaflet-zoom-' + (this._zoomAnimated ? 'animated' : 'hide');
 
 		var icon = options.icon.createIcon(this._icon),
-		    addIcon = false;
+			addIcon = false;
 
 		// if we're not reusing the icon, remove the old one and init new one
 		if (icon !== this._icon) {
@@ -7337,7 +7341,7 @@ var Marker = Layer.extend({
 		}
 
 		var newShadow = options.icon.createShadow(this._shadow),
-		    addShadow = false;
+			addShadow = false;
 
 		if (newShadow !== this._shadow) {
 			this._removeShadow();
